@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Daily Expense Tracker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f6f8;
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .container {
+            background: #fff;
+            width: 400px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background: #45a049;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f1f1f1;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+
+        .delete {
+            background: red;
+            color: white;
+            border: none;
+            padding: 5px 8px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .total {
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Daily Expense Tracker</h2>
+
+    <input type="text" id="expenseName" placeholder="Expense Name">
+    <input type="number" id="expenseAmount" placeholder="Amount">
+    
+    <select id="expenseCategory">
+        <option value="">Select Category</option>
+        <option>Food</option>
+        <option>Travel</option>
+        <option>Shopping</option>
+        <option>Bills</option>
+    </select>
+
+    <button onclick="addExpense()">Add Expense</button>
+
+    <ul id="expenseList"></ul>
+
+    <div class="total">
+        Total Expense: ₹ <span id="totalAmount">0</span>
+    </div>
+</div>
+
+<script>
+    let total = 0;
+
+    function addExpense() {
+        const name = document.getElementById("expenseName").value;
+        const amount = Number(document.getElementById("expenseAmount").value);
+        const category = document.getElementById("expenseCategory").value;
+
+        if (name === "" || amount === 0 || category === "") {
+            alert("Please fill all fields");
+            return;
+        }
+
+        const li = document.createElement("li");
+        li.innerHTML = `
+            ${name} (${category}) - ₹${amount}
+            <button class="delete" onclick="deleteExpense(this, ${amount})">X</button>
+        `;
+
+        document.getElementById("expenseList").appendChild(li);
+
+        total += amount;
+        document.getElementById("totalAmount").innerText = total;
+
+       9
+        document.getElementById("expenseName").value = "";
+        document.getElementById("expenseAmount").value = "";
+        document.getElementById("expenseCategory").value = "";
+    }
+
+    function deleteExpense(button, amount) {
+        button.parentElement.remove();
+        total -= amount;
+        document.getElementById("totalAmount").innerText = total;
+    }
+</script>
+
+</body>
+</html>
